@@ -1,0 +1,65 @@
+{
+  "name": "vue-component-dev-cli",
+  "version": "0.1.0",
+  "description": "Simple CLI for scaffolding Vue.js component",
+  "preferGlobal": true,
+  "bin": {
+    "vue-c": "bin/vue-c",
+    "vue-c-init": "bin/vue-c-init",
+    "vue-c-list": "bin/vue-c-list"
+  },
+  "scripts": {
+    "test": "mocha",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/savoygu/vue-component-dev-cli"
+  },
+  "keywords": [
+    "vue",
+    "component",
+    "cli",
+    "spa"
+  ],
+  "author": "Savoygu <savoygu@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/savoygu/vue-component-dev-cli/issues"
+  },
+  "homepage": "https://github.com/savoygu/vue-component-dev-cli#readme",
+  "main": "lib/index.js",
+  "dependencies": {
+    "async": "^2.5.0",
+    "chalk": "^1.1.3",
+    "consolidate": "^0.14.5",
+    "download-git-repo": "^1.0.1",
+    "handlebars": "^4.0.10",
+    "inquirer": "^3.1.1",
+    "metalsmith": "^2.3.0",
+    "minimatch": "^3.0.4",
+    "multimatch": "^2.1.0",
+    "ora": "^1.3.0",
+    "read-metadata": "^1.0.0",
+    "request": "^2.81.0",
+    "rimraf": "^2.6.1",
+    "tildify": "^1.2.0",
+    "user-home": "^2.0.0",
+    "validate-npm-package-name": "^3.0.0"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "coveralls": "^2.13.1",
+    "eslint": "^4.0.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-node": "^5.0.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "nyc": "^11.0.2"
+  },
+  "engines": {
+    "node": ">=4"
+  }
+}

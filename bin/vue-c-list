@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+
+var logger = require('../lib/logger')
+var request = require('request')
+var chalk = require('chalk')
+
+/**
+ * Padding.
+ */
+
+console.log()
+process.on('exit', function () {
+  console.log()
+})
+
+request({
+  url: 'https://api.github.com/repos/savoygu/vue-component-dev-template',
+  headers: {
+    'User-Agent': 'vue-component-dev-template'
+  }
+}, function (err, res, body) {
+  if (err) logger.fatal(err)
+  console.log('  Available templates:')
+  console.log()
+  console.log('  ' + chalk.yellow('★') + '  ' + chalk.blue(JSON.parse(body).name) + ' - ' + JSON.parse(body).description)
+})

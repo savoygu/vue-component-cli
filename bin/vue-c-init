@@ -1,0 +1,139 @@
+#!/usr/bin/env node
+
+var path = require('path')
+var exists = require('fs').existsSync
+var program = require('commander')
+var chalk = require('chalk')
+var inquirer = require('inquirer') // https://github.com/SBoudrias/Inquirer.js 与之前相比，有所变化
+var download = require('download-git-repo') // https://github.com/flipxfx/download-git-repo
+var ora = require('ora')
+var rm = require('rimraf').sync
+var home = require('user-home')
+var tildify = require('tildify') // https://github.com/sindresorhus/tildify
+var logger = require('../lib/logger')
+var generate = require('../lib/generate')
+var localPath = require('../lib/local-path')
+
+var isLocalPath = localPath.isLocalPath
+var getTemplatePath = localPath.getTemplatePath
+
+/**
+ * Usage.
+ */
+
+program
+  .usage('<template> <project-name>')
+  .option('-c, --clone', 'use git clone')
+  .option('-f, --offline', 'use cached tempalte')
+
+/**
+ * Help.
+ */
+
+program.on('--help', function () {
+  console.log('  Examples:')
+  console.log()
+  console.log(chalk.gray('    # create a new project with vue-component-dev-template'))
+  console.log('    $ vue-c init vue-component-dev-template my-project')
+  console.log()
+  console.log(chalk.gray('    # create a new project straight from a github template'))
+  console.log('    $ vue-c init username/repo my-project')
+  console.log()
+})
+
+/**
+ * Help.
+ */
+
+function help () {
+  program.parse(process.argv)
+  if (!program.args.length) return program.help()
+}
+help()
+
+/**
+ * Settings.
+ */
+
+var template = program.args[0] // 模板名称
+var hasSlash = template.indexOf('/') > -1 // github template
+var rawName = program.args[1] // 项目名称
+var inPlace = !rawName || rawName === '.' // 没有输入项目名称
+var name = inPlace ? path.relative('../', process.cwd()) : rawName // 当前目录 or 输入目录（项目生成目录）
+var to = path.resolve(rawName || '.')
+var clone = program.clone || false // use git clone
+
+var tmp = path.join(home, '.vue-templates', template.replace(/\//g, '-')) // 缓存模板路径
+if (program.offline) { // 离线模式
+  console.log(`> Use cached template at ${chalk.yellow(tildify(tmp))}`)
+  template = tmp
+}
+
+/**
+ * Padding.
+ */
+
+console.log()
+process.on('exit', function () {
+  console.log()
+})
+
+if (exists(to)) { // 目录存在
+  inquirer.prompt([{
+    type: 'confirm',
+    message: inPlace
+      ? 'Generate project in current directory'
+      : 'Target directory exists. Continue?',
+    name: 'ok'
+  }]).then(function (answers) {
+    if (answers.ok) {
+      run()
+    }
+  })
+} else {
+  run()
+}
+
+function run () {
+  if (isLocalPath(template)) { // 采用离线模式 或 指定绝对路径模板
+    var tempaltePath = getTemplatePath(template)
+    if (exists(tempaltePath)) {
+      generate(name, tempaltePath, to, function (err) {
+        if (err) logger.fatal(err)
+        console.log()
+        logger.success('Generated "%s".', name)
+      })
+    } else {
+      logger.fatal('Local tempalte "%s" not found.', template)
+    }
+  } else {
+    if (!hasSlash) {
+      // use templates
+      var savoyguTemplate = 'savoygu/' + template
+      downloadAndGenerate(savoyguTemplate)
+    } else { // user repo
+      downloadAndGenerate(template)
+    }
+  }
+}
+
+function downloadAndGenerate (template) { // remote
+  var spinner = ora('downloading template')
+  spinner.start()
+  if (exists(tmp)) rm(tmp)
+  /**
+   * tempalte: 模板名称
+   * tmp: 缓存路径
+   * clone: 克隆还是？
+   * callback
+   */
+  download(template, tmp, {clone: clone}, function (err) { // download 至 缓存目录
+    spinner.stop()
+    if (err) logger.fatal('Failed to download repo ' + template + ':' + err.message.trim())
+    generate(name, tmp, to, function (err) {
+      if (err) logger.fatal(err)
+      console.log()
+      logger.success('Generated "%s"', name)
+    })
+  })
+}
