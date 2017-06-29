@@ -17,7 +17,7 @@ $ vue-c init <template-name> <project-name>
 Example:
 
 ```bash
-$ vue-c init vue-componnet-dev-template my-project
+$ vue-c init vue-componnet-template my-project
 ```
 
 ## Official Template
