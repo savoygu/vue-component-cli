@@ -1,5 +1,5 @@
 {
-  "name": "vue-component-dev-cli",
+  "name": "vue-component-cli",
   "version": "0.1.0",
   "description": "Simple CLI for scaffolding Vue.js component",
   "preferGlobal": true,
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/savoygu/vue-component-dev-cli"
+    "url": "git+https://github.com/savoygu/vue-component-cli"
   },
   "keywords": [
     "vue",
@@ -25,9 +25,9 @@
   "author": "Savoygu <savoygu@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/savoygu/vue-component-dev-cli/issues"
+    "url": "https://github.com/savoygu/vue-component-cli/issues"
   },
-  "homepage": "https://github.com/savoygu/vue-component-dev-cli#readme",
+  "homepage": "https://github.com/savoygu/vue-component-cli#readme",
   "main": "lib/index.js",
   "dependencies": {
     "async": "^2.5.0",

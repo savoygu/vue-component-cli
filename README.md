@@ -1,11 +1,11 @@
-# vue-component-dev-cli (clone from [vue-cli](https://github.com/vuejs/vue-cli/))
+# vue-component-cli (clone from [vue-cli](https://github.com/vuejs/vue-cli/))
 
 > Simple CLI for scaffolding Vue.js component
 
 ## Installation
 
 ```bash
-$ npm install -g vue-component-dev-cli
+$ npm install -g vue-component-cli
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ $ vue-c init vue-componnet-dev-template my-project
 
 ## Official Template
 
-The only template: [vue-component-dev-template](https://github.com/savoygu/vue-component-dev-template)
+The only template: [vue-component-template](https://github.com/savoygu/vue-component-template)
 
 ## Custom Templates
 

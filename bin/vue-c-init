@@ -33,8 +33,8 @@ program
 program.on('--help', function () {
   console.log('  Examples:')
   console.log()
-  console.log(chalk.gray('    # create a new project with vue-component-dev-template'))
-  console.log('    $ vue-c init vue-component-dev-template my-project')
+  console.log(chalk.gray('    # create a new project with vue-component-template'))
+  console.log('    $ vue-c init vue-component-template my-project')
   console.log()
   console.log(chalk.gray('    # create a new project straight from a github template'))
   console.log('    $ vue-c init username/repo my-project')
